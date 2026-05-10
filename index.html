@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CurrencyPro</title>
+<link rel="icon" type="image/png" href="Gemini_Generated_Image_5g6xqj5g6xqj5g6x-Photoroom.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --s900:#0D1117;--s800:#161B22;--s700:#1C2330;--s600:#21262D;--s500:#30363D;
+  --e500:#10B981;--e400:#34D399;--e300:#6EE7B7;
+  --w:#FFFFFF;--w2:#E6EDF3;--w3:#8B949E;--w4:#3D444D;
+  --red:#F85149;--amber:#D29922;--blue:#58A6FF;
+  --bg:var(--s900);--card:var(--s800);--border:var(--s500);
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--w);-webkit-font-smoothing:antialiased}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes numIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes waveA{0%,100%{transform:translateX(0) scaleY(1)}50%{transform:translateX(-4%) scaleY(1.04)}}
+@keyframes waveB{0%,100%{transform:translateX(0)}50%{transform:translateX(4%)}}
+@keyframes orbiting{0%{transform:rotate(0deg) translateX(76px) rotate(0deg)}100%{transform:rotate(360deg) translateX(76px) rotate(-360deg)}}
+@keyframes orb2{0%{transform:rotate(90deg) translateX(58px) rotate(-90deg)}100%{transform:rotate(450deg) translateX(58px) rotate(-450deg)}}
+@keyframes orb3{0%{transform:rotate(180deg) translateX(92px) rotate(-180deg)}100%{transform:rotate(540deg) translateX(92px) rotate(-540deg)}}
+@keyframes orb4{0%{transform:rotate(270deg) translateX(66px) rotate(-270deg)}100%{transform:rotate(630deg) translateX(66px) rotate(-630deg)}}
+@keyframes orb5{0%{transform:rotate(45deg) translateX(82px) rotate(-45deg)}100%{transform:rotate(405deg) translateX(82px) rotate(-405deg)}}
+@keyframes orb6{0%{transform:rotate(135deg) translateX(50px) rotate(-135deg)}100%{transform:rotate(495deg) translateX(50px) rotate(-495deg)}}
+@keyframes globeGlow{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.2),0 0 24px rgba(16,185,129,.15)}50%{box-shadow:0 0 0 8px rgba(16,185,129,0),0 0 40px rgba(16,185,129,.25)}}
+@keyframes confetti{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(-50px) rotate(720deg);opacity:0}}
+@keyframes gridMove{from{transform:translateY(0)}to{transform:translateY(40px)}}
+.fade-up{animation:fadeUp .35s cubic-bezier(.22,1,.36,1) both}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
+input[type=number]{-moz-appearance:textfield;appearance:textfield}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--s800)}
+::-webkit-scrollbar-thumb{background:var(--s500);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--e500)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px}
+.row-hover{transition:background .12s}.row-hover:hover{background:rgba(16,185,129,.04)!important}
+.tab-bar-wrap{background:var(--s800);border-bottom:1px solid var(--border);padding:8px 16px;position:sticky;top:0;z-index:50}
+.tab-bar{display:flex;gap:4px;background:#FFFFFF;border-radius:9px;padding:3px;border:1px solid rgba(0,0,0,.08);box-shadow:0 1px 4px rgba(0,0,0,.3);overflow-x:auto}
+.tab-bar::-webkit-scrollbar{height:0}
+.tab-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:7px;border:none;background:transparent;cursor:pointer;white-space:nowrap;flex-shrink:0;font-size:13px;font-family:'Inter',sans-serif;font-weight:500;color:#374151;transition:all .18s}
+.tab-btn i{font-size:14px;color:#6B7280;transition:color .18s}
+.tab-btn:hover{background:rgba(16,185,129,.08);color:#065F46}
+.tab-btn:hover i{color:#10B981}
+.tab-btn.active{background:var(--e500);color:#fff;font-weight:600;box-shadow:0 2px 8px rgba(16,185,129,.35)}
+.tab-btn.active i{color:#fff}
+.input-sl{width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--s700);font-size:14px;font-family:'Inter',sans-serif;color:var(--w);outline:none;transition:border-color .18s,box-shadow .18s}
+.input-sl:focus{border-color:var(--e500);box-shadow:0 0 0 3px rgba(16,185,129,.12)}
+.input-sl::placeholder{color:var(--w3)}
+.btn-primary{background:var(--e500);color:#fff;border:none;border-radius:10px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:12px;width:100%;transition:all .18s}
+.btn-primary:hover{background:#0EA472;transform:translateY(-1px)}
+.btn-ghost{padding:8px 14px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--w2);font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;transition:all .18s}
+.btn-ghost:hover{border-color:var(--e500);color:var(--e400);background:rgba(16,185,129,.06)}
+.chip-sl{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;cursor:pointer;font-size:12px;font-family:'Inter',sans-serif;font-weight:500;color:var(--w3);transition:all .16s;white-space:nowrap}
+.chip-sl:hover,.chip-sl.active{background:rgba(16,185,129,.12);border-color:var(--e500);color:var(--e400)}
+.api-bar{display:flex;align-items:center;gap:6px;padding:6px 14px;font-size:11px;font-family:'JetBrains Mono',monospace;background:var(--s700);border-bottom:1px solid var(--border);position:relative;z-index:40}
+.api-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const {useState,useEffect,useRef,useMemo}=React;
+const h=React.createElement;
+
+const FALLBACK={USD:1,EUR:.9215,GBP:.7862,JPY:154.72,CAD:1.3648,AUD:1.5421,CHF:.9034,CNY:7.2451,INR:83.42,KRW:1328.5,BRL:4.975,MXN:17.12,SGD:1.342,NZD:1.6234,ZAR:18.63,THB:35.78,SEK:10.42,NOK:10.61,DKK:6.884,PKR:278.5,AED:3.6725,SAR:3.75,TRY:32.15,KWD:.3072,ARS:876.5,EGP:30.9,NGN:1540,KES:129.5,GHS:15.6,MAD:9.98,TZS:2580,UGX:3720,ETB:57.5,DZD:134.5,TND:3.12,ZMW:27.4,BWP:13.6,MUR:45.2,AOA:850,RWF:1310,XOF:604,XAF:604,IDR:15780,MYR:4.68,PHP:57.4,VND:25180,HKD:7.824,TWD:32.1,BDT:110,LKR:298,NPR:133,MMK:2098,KHR:4085,UZS:12750,KZT:454,AZN:1.70,GEL:2.66,AMD:387,AFN:70.2,IRR:42150,IQD:1308,JOD:.709,OMR:.385,BHD:.376,QAR:3.64,ILS:3.74,YER:250,RUB:91.25,UAH:39.8,BYN:3.27,MDL:17.8,RON:4.59,HUF:358,CZK:22.9,PLN:3.96,BGN:1.80,RSD:108,ISK:138,CLP:940,COP:3940,PEN:3.74,UYU:39.5,PYG:7420,BOB:6.91,GTQ:7.78,HNL:24.7,NIO:36.7,CRC:513,DOP:59.5,JMD:157,TTD:6.78,BBD:2.0,BSD:1.0,BZD:2.0,GYD:209,XCD:2.70,FJD:2.26,PGK:3.78,WST:2.74,TOP:2.38,SBD:8.41,MVR:15.4,BTN:83.4,SCR:13.8,GMD:68.2,SOS:571,DJF:178,MWK:1720,ZWL:321,NAD:18.63,MZN:63.8,KMF:453,MGA:4520,BIF:2870,CDF:2750,CVE:101.5,MRU:39.8,STN:22.5,GNF:8640,SLL:20900,SDG:600,LYD:4.82,MNT:3420,TMT:3.5,TJS:10.9,KGS:89.1,MOP:8.05,BND:1.342,KYD:.833,FKP:.786,SHP:.786,XPF:110.4,AWG:1.79,SRD:28.5,HTG:131,CUP:24,PAB:1.0,VES:36.5,MKD:57.1,ALL:93.4,BAM:1.80,LBP:89500,LAK:21800,KPW:900};
+
+const CURR=[
+  {code:"USD",name:"US Dollar",flag:"🇺🇸",sym:"$"},{code:"EUR",name:"Euro",flag:"🇪🇺",sym:"€"},
+  {code:"GBP",name:"British Pound",flag:"🇬🇧",sym:"£"},{code:"JPY",name:"Japanese Yen",flag:"🇯🇵",sym:"¥"},
+  {code:"CAD",name:"Canadian Dollar",flag:"🇨🇦",sym:"C$"},{code:"AUD",name:"Australian Dollar",flag:"🇦🇺",sym:"A$"},
+  {code:"CHF",name:"Swiss Franc",flag:"🇨🇭",sym:"Fr"},{code:"CNY",name:"Chinese Yuan",flag:"🇨🇳",sym:"¥"},
+  {code:"INR",name:"Indian Rupee",flag:"🇮🇳",sym:"₹"},{code:"KRW",name:"South Korean Won",flag:"🇰🇷",sym:"₩"},
+  {code:"BRL",name:"Brazilian Real",flag:"🇧🇷",sym:"R$"},{code:"MXN",name:"Mexican Peso",flag:"🇲🇽",sym:"$"},
+  {code:"SGD",name:"Singapore Dollar",flag:"🇸🇬",sym:"S$"},{code:"NZD",name:"New Zealand Dollar",flag:"🇳🇿",sym:"NZ$"},
+  {code:"ZAR",name:"South African Rand",flag:"🇿🇦",sym:"R"},{code:"THB",name:"Thai Baht",flag:"🇹🇭",sym:"฿"},
+  {code:"SEK",name:"Swedish Krona",flag:"🇸🇪",sym:"kr"},{code:"NOK",name:"Norwegian Krone",flag:"🇳🇴",sym:"kr"},
+  {code:"DKK",name:"Danish Krone",flag:"🇩🇰",sym:"kr"},{code:"PKR",name:"Pakistani Rupee",flag:"🇵🇰",sym:"₨"},
+  {code:"AED",name:"UAE Dirham",flag:"🇦🇪",sym:"د.إ"},{code:"SAR",name:"Saudi Riyal",flag:"🇸🇦",sym:"﷼"},
+  {code:"TRY",name:"Turkish Lira",flag:"🇹🇷",sym:"₺"},{code:"KWD",name:"Kuwaiti Dinar",flag:"🇰🇼",sym:"KD"},
+  {code:"ARS",name:"Argentine Peso",flag:"🇦🇷",sym:"$"},{code:"EGP",name:"Egyptian Pound",flag:"🇪🇬",sym:"E£"},
+  {code:"NGN",name:"Nigerian Naira",flag:"🇳🇬",sym:"₦"},{code:"KES",name:"Kenyan Shilling",flag:"🇰🇪",sym:"KSh"},
+  {code:"GHS",name:"Ghanaian Cedi",flag:"🇬🇭",sym:"₵"},{code:"MAD",name:"Moroccan Dirham",flag:"🇲🇦",sym:"د.م."},
+  {code:"TZS",name:"Tanzanian Shilling",flag:"🇹🇿",sym:"TSh"},{code:"UGX",name:"Ugandan Shilling",flag:"🇺🇬",sym:"USh"},
+  {code:"ETB",name:"Ethiopian Birr",flag:"🇪🇹",sym:"Br"},{code:"DZD",name:"Algerian Dinar",flag:"🇩🇿",sym:"دج"},
+  {code:"TND",name:"Tunisian Dinar",flag:"🇹🇳",sym:"DT"},{code:"ZMW",name:"Zambian Kwacha",flag:"🇿🇲",sym:"ZK"},
+  {code:"BWP",name:"Botswana Pula",flag:"🇧🇼",sym:"P"},{code:"MUR",name:"Mauritian Rupee",flag:"🇲🇺",sym:"₨"},
+  {code:"AOA",name:"Angolan Kwanza",flag:"🇦🇴",sym:"Kz"},{code:"RWF",name:"Rwandan Franc",flag:"🇷🇼",sym:"FRw"},
+  {code:"XOF",name:"CFA Franc BCEAO",flag:"🇸🇳",sym:"CFA"},{code:"XAF",name:"CFA Franc BEAC",flag:"🇨🇲",sym:"FCFA"},
+  {code:"IDR",name:"Indonesian Rupiah",flag:"🇮🇩",sym:"Rp"},{code:"MYR",name:"Malaysian Ringgit",flag:"🇲🇾",sym:"RM"},
+  {code:"PHP",name:"Philippine Peso",flag:"🇵🇭",sym:"₱"},{code:"VND",name:"Vietnamese Dong",flag:"🇻🇳",sym:"₫"},
+  {code:"HKD",name:"Hong Kong Dollar",flag:"🇭🇰",sym:"HK$"},{code:"TWD",name:"Taiwan Dollar",flag:"🇹🇼",sym:"NT$"},
+  {code:"BDT",name:"Bangladeshi Taka",flag:"🇧🇩",sym:"৳"},{code:"LKR",name:"Sri Lankan Rupee",flag:"🇱🇰",sym:"₨"},
+  {code:"NPR",name:"Nepalese Rupee",flag:"🇳🇵",sym:"₨"},{code:"MMK",name:"Myanmar Kyat",flag:"🇲🇲",sym:"K"},
+  {code:"KHR",name:"Cambodian Riel",flag:"🇰🇭",sym:"៛"},{code:"UZS",name:"Uzbek Som",flag:"🇺🇿",sym:"лв"},
+  {code:"KZT",name:"Kazakhstani Tenge",flag:"🇰🇿",sym:"₸"},{code:"AZN",name:"Azerbaijani Manat",flag:"🇦🇿",sym:"₼"},
+  {code:"GEL",name:"Georgian Lari",flag:"🇬🇪",sym:"₾"},{code:"AMD",name:"Armenian Dram",flag:"🇦🇲",sym:"֏"},
+  {code:"AFN",name:"Afghan Afghani",flag:"🇦🇫",sym:"؋"},{code:"IRR",name:"Iranian Rial",flag:"🇮🇷",sym:"﷼"},
+  {code:"IQD",name:"Iraqi Dinar",flag:"🇮🇶",sym:"ع.د"},{code:"JOD",name:"Jordanian Dinar",flag:"🇯🇴",sym:"JD"},
+  {code:"OMR",name:"Omani Rial",flag:"🇴🇲",sym:"ر.ع."},{code:"BHD",name:"Bahraini Dinar",flag:"🇧🇭",sym:".د.ب"},
+  {code:"QAR",name:"Qatari Riyal",flag:"🇶🇦",sym:"﷼"},{code:"ILS",name:"Israeli Shekel",flag:"🇮🇱",sym:"₪"},
+  {code:"YER",name:"Yemeni Rial",flag:"🇾🇪",sym:"﷼"},{code:"RUB",name:"Russian Ruble",flag:"🇷🇺",sym:"₽"},
+  {code:"UAH",name:"Ukrainian Hryvnia",flag:"🇺🇦",sym:"₴"},{code:"BYN",name:"Belarusian Ruble",flag:"🇧🇾",sym:"Br"},
+  {code:"MDL",name:"Moldovan Leu",flag:"🇲🇩",sym:"L"},{code:"RON",name:"Romanian Leu",flag:"🇷🇴",sym:"lei"},
+  {code:"HUF",name:"Hungarian Forint",flag:"🇭🇺",sym:"Ft"},{code:"CZK",name:"Czech Koruna",flag:"🇨🇿",sym:"Kč"},
+  {code:"PLN",name:"Polish Zloty",flag:"🇵🇱",sym:"zł"},{code:"BGN",name:"Bulgarian Lev",flag:"🇧🇬",sym:"лв"},
+  {code:"RSD",name:"Serbian Dinar",flag:"🇷🇸",sym:"din"},{code:"ISK",name:"Icelandic Króna",flag:"🇮🇸",sym:"kr"},
+  {code:"CLP",name:"Chilean Peso",flag:"🇨🇱",sym:"$"},{code:"COP",name:"Colombian Peso",flag:"🇨🇴",sym:"$"},
+  {code:"PEN",name:"Peruvian Sol",flag:"🇵🇪",sym:"S/"},{code:"UYU",name:"Uruguayan Peso",flag:"🇺🇾",sym:"$U"},
+  {code:"PYG",name:"Paraguayan Guaraní",flag:"🇵🇾",sym:"₲"},{code:"BOB",name:"Bolivian Boliviano",flag:"🇧🇴",sym:"Bs"},
+  {code:"GTQ",name:"Guatemalan Quetzal",flag:"🇬🇹",sym:"Q"},{code:"HNL",name:"Honduran Lempira",flag:"🇭🇳",sym:"L"},
+  {code:"NIO",name:"Nicaraguan Córdoba",flag:"🇳🇮",sym:"C$"},{code:"CRC",name:"Costa Rican Colón",flag:"🇨🇷",sym:"₡"},
+  {code:"DOP",name:"Dominican Peso",flag:"🇩🇴",sym:"RD$"},{code:"JMD",name:"Jamaican Dollar",flag:"🇯🇲",sym:"J$"},
+  {code:"TTD",name:"Trinidad Dollar",flag:"🇹🇹",sym:"TT$"},{code:"BBD",name:"Barbadian Dollar",flag:"🇧🇧",sym:"Bds$"},
+  {code:"BSD",name:"Bahamian Dollar",flag:"🇧🇸",sym:"B$"},{code:"BZD",name:"Belize Dollar",flag:"🇧🇿",sym:"BZ$"},
+  {code:"GYD",name:"Guyanese Dollar",flag:"🇬🇾",sym:"G$"},{code:"XCD",name:"East Caribbean Dollar",flag:"🇦🇬",sym:"EC$"},
+  {code:"FJD",name:"Fijian Dollar",flag:"🇫🇯",sym:"FJ$"},{code:"PGK",name:"Papua New Guinean Kina",flag:"🇵🇬",sym:"K"},
+  {code:"WST",name:"Samoan Tālā",flag:"🇼🇸",sym:"T"},{code:"TOP",name:"Tongan Paʻanga",flag:"🇹🇴",sym:"T$"},
+  {code:"SBD",name:"Solomon Islands Dollar",flag:"🇸🇧",sym:"SI$"},{code:"MVR",name:"Maldivian Rufiyaa",flag:"🇲🇻",sym:"Rf"},
+  {code:"BTN",name:"Bhutanese Ngultrum",flag:"🇧🇹",sym:"Nu"},{code:"SCR",name:"Seychellois Rupee",flag:"🇸🇨",sym:"SR"},
+  {code:"GMD",name:"Gambian Dalasi",flag:"🇬🇲",sym:"D"},{code:"SOS",name:"Somali Shilling",flag:"🇸🇴",sym:"Sh"},
+  {code:"DJF",name:"Djiboutian Franc",flag:"🇩🇯",sym:"Fr"},{code:"MWK",name:"Malawian Kwacha",flag:"🇲🇼",sym:"MK"},
+  {code:"ZWL",name:"Zimbabwean Dollar",flag:"🇿🇼",sym:"Z$"},{code:"NAD",name:"Namibian Dollar",flag:"🇳🇦",sym:"N$"},
+  {code:"MZN",name:"Mozambican Metical",flag:"🇲🇿",sym:"MT"},{code:"KMF",name:"Comorian Franc",flag:"🇰🇲",sym:"CF"},
+  {code:"MGA",name:"Malagasy Ariary",flag:"🇲🇬",sym:"Ar"},{code:"BIF",name:"Burundian Franc",flag:"🇧🇮",sym:"Fr"},
+  {code:"CDF",name:"Congolese Franc",flag:"🇨🇩",sym:"Fr"},{code:"CVE",name:"Cape Verdean Escudo",flag:"🇨🇻",sym:"$"},
+  {code:"MRU",name:"Mauritanian Ouguiya",flag:"🇲🇷",sym:"UM"},{code:"STN",name:"São Tomé Dobra",flag:"🇸🇹",sym:"Db"},
+  {code:"GNF",name:"Guinean Franc",flag:"🇬🇳",sym:"FG"},{code:"SLL",name:"Sierra Leonean Leone",flag:"🇸🇱",sym:"Le"},
+  {code:"SDG",name:"Sudanese Pound",flag:"🇸🇩",sym:"ج.س"},{code:"LYD",name:"Libyan Dinar",flag:"🇱🇾",sym:"LD"},
+  {code:"MNT",name:"Mongolian Tugrik",flag:"🇲🇳",sym:"₮"},{code:"TMT",name:"Turkmenistani Manat",flag:"🇹🇲",sym:"T"},
+  {code:"TJS",name:"Tajikistani Somoni",flag:"🇹🇯",sym:"SM"},{code:"KGS",name:"Kyrgyzstani Som",flag:"🇰🇬",sym:"с"},
+  {code:"MOP",name:"Macanese Pataca",flag:"🇲🇴",sym:"P"},{code:"BND",name:"Brunei Dollar",flag:"🇧🇳",sym:"B$"},
+  {code:"KYD",name:"Cayman Islands Dollar",flag:"🇰🇾",sym:"CI$"},{code:"FKP",name:"Falkland Islands Pound",flag:"🇫🇰",sym:"£"},
+  {code:"SHP",name:"Saint Helena Pound",flag:"🇸🇭",sym:"£"},{code:"XPF",name:"CFP Franc",flag:"🇵🇫",sym:"₣"},
+  {code:"AWG",name:"Aruban Florin",flag:"🇦🇼",sym:"ƒ"},{code:"SRD",name:"Surinamese Dollar",flag:"🇸🇷",sym:"$"},
+  {code:"HTG",name:"Haitian Gourde",flag:"🇭🇹",sym:"G"},{code:"CUP",name:"Cuban Peso",flag:"🇨🇺",sym:"$"},
+  {code:"PAB",name:"Panamanian Balboa",flag:"🇵🇦",sym:"B/."},{code:"VES",name:"Venezuelan Bolívar",flag:"🇻🇪",sym:"Bs.S"},
+  {code:"MKD",name:"Macedonian Denar",flag:"🇲🇰",sym:"ден"},{code:"ALL",name:"Albanian Lek",flag:"🇦🇱",sym:"L"},
+  {code:"BAM",name:"Bosnian Mark",flag:"🇧🇦",sym:"KM"},{code:"LBP",name:"Lebanese Pound",flag:"🇱🇧",sym:"ل.ل"},
+  {code:"LAK",name:"Lao Kip",flag:"🇱🇦",sym:"₭"},{code:"KPW",name:"North Korean Won",flag:"🇰🇵",sym:"₩"},
+];
+
+function byCode(c){return CURR.find(x=>x.code===c)||CURR[0]}
+function fmt(v){return v>=1000?v.toLocaleString("en-US",{maximumFractionDigits:2}):v.toFixed(4)}
+function cvt(a,f,t,R){const n=parseFloat(a);if(!n||isNaN(n)||!R[f]||!R[t])return"";return fmt((n/R[f])*R[t])}
+function rate(f,t,R){if(!R[f]||!R[t])return"—";return fmt(R[t]/R[f])}
+function seeded(s){let x=s%2147483647;return()=>{x=x*16807%2147483647;return(x-1)/2147483646}}
+
+function BG(){
+  return h("div",{style:{position:"fixed",inset:0,zIndex:0,overflow:"hidden",pointerEvents:"none"}},
+    h("div",{style:{position:"absolute",inset:0,background:"linear-gradient(160deg,#0D1117 0%,#0F1A15 50%,#0D1117 100%)"}}),
+    h("div",{style:{position:"absolute",inset:0,backgroundImage:"radial-gradient(circle at 20% 30%,rgba(16,185,129,.07) 0%,transparent 50%),radial-gradient(circle at 80% 70%,rgba(16,185,129,.05) 0%,transparent 45%)"}}),
+    h("svg",{style:{position:"absolute",bottom:0,left:0,width:"100%",height:120,opacity:.35},viewBox:"0 0 1200 120",preserveAspectRatio:"none"},
+      h("path",{d:"M0,60 C200,20 400,100 600,60 C800,20 1000,100 1200,60 L1200,120 L0,120 Z",fill:"rgba(16,185,129,.12)",style:{animation:"waveA 8s ease-in-out infinite"}}),
+      h("path",{d:"M0,80 C180,30 380,110 580,70 C780,30 980,100 1200,75 L1200,120 L0,120 Z",fill:"rgba(16,185,129,.07)",style:{animation:"waveB 11s ease-in-out infinite"}})
+    ),
+    h("div",{style:{position:"absolute",inset:0,backgroundImage:"radial-gradient(circle at 1px 1px,rgba(16,185,129,.025) 1px,transparent 0)",backgroundSize:"36px 36px",animation:"gridMove 20s linear infinite"}})
+  )
+}
+
+function Ticker({R}){
+  const pairs=[["USD","EUR"],["USD","GBP"],["USD","JPY"],["USD","PKR"],["EUR","GBP"],["USD","INR"],["USD","CAD"],["USD","AED"],["GBP","USD"],["USD","CHF"],["USD","SGD"],["EUR","JPY"]];
+  const txt=pairs.map(([f,t])=>`${byCode(f).flag} ${f}/${t}  ${rate(f,t,R)}`).join("   ·   ");
+  const d=txt+"   ·   "+txt;
+  return h("div",{style:{background:"var(--s800)",borderBottom:"1px solid var(--border)",overflow:"hidden",padding:"6px 0",position:"relative",zIndex:10}},
+    h("div",{style:{display:"flex",whiteSpace:"nowrap",animation:"ticker 32s linear infinite",fontSize:11,fontFamily:"'JetBrains Mono',monospace",color:"var(--e400)",letterSpacing:".3px"}},
+      h("span",{style:{paddingRight:28}},d),h("span",{style:{paddingRight:28}},d)
+    )
+  )
+}
+
+function Globe(){
+  const items=[{s:"$",a:"orbiting",d:"5s",c:"#10B981"},{s:"€",a:"orb2",d:"4s",c:"#34D399"},{s:"£",a:"orb3",d:"6.5s",c:"#6EE7B7"},{s:"¥",a:"orb4",d:"4.8s",c:"#10B981"},{s:"₹",a:"orb5",d:"5.5s",c:"#34D399"},{s:"₩",a:"orb6",d:"3.8s",c:"#6EE7B7"}];
+  return h("div",{style:{position:"relative",width:200,height:200,flexShrink:0}},
+    h("div",{style:{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",width:160,height:160,borderRadius:"50%",background:"radial-gradient(circle,rgba(16,185,129,.18) 0%,transparent 70%)",filter:"blur(20px)"}}),
+    h("div",{style:{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",width:80,height:80,borderRadius:"50%",background:"radial-gradient(circle at 38% 35%,#1A3A2A,#0D1F17)",border:"1px solid rgba(16,185,129,.4)",animation:"globeGlow 3.5s ease-in-out infinite",overflow:"hidden",zIndex:2}},
+      h("div",{style:{position:"absolute",inset:0,borderRadius:"50%",background:"repeating-linear-gradient(0deg,transparent,transparent 12px,rgba(16,185,129,.12) 13px)"}}),
+      h("div",{style:{position:"absolute",inset:0,borderRadius:"50%",background:"repeating-linear-gradient(90deg,transparent,transparent 12px,rgba(16,185,129,.08) 13px)",transform:"rotate(25deg)"}})
+    ),
+    h("div",{style:{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",width:174,height:174,borderRadius:"50%",border:"1px dashed rgba(16,185,129,.15)",pointerEvents:"none"}}),
+    h("div",{style:{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",width:136,height:136,borderRadius:"50%",border:"1px dashed rgba(16,185,129,.1)",pointerEvents:"none"}}),
+    items.map((it,i)=>h("div",{key:i,style:{position:"absolute",top:"50%",left:"50%",width:0,height:0,animation:`${it.a} ${it.d} linear infinite`}},
+      h("div",{style:{position:"absolute",transform:"translate(-50%,-50%)",background:"rgba(13,17,23,.9)",border:`1px solid ${it.c}`,borderRadius:6,padding:"3px 8px",fontSize:13,fontWeight:700,color:it.c,fontFamily:"'JetBrains Mono',monospace",whiteSpace:"nowrap"}},it.s)
+    ))
+  )
+}
+
+function Spark({from,to,ht=30,wd=60,R}){
+  const pts=useMemo(()=>{const rand=seeded((from.charCodeAt(0)*31+to.charCodeAt(0))*7);const base=(R[to]||1)/(R[from]||1);let v=base*(1-rand()*.03);const a=[];for(let i=0;i<18;i++){v*=(1+(rand()*.02-.01));a.push(v)}a.push(base);return a},[from,to,R]);
+  const mn=Math.min(...pts),mx=Math.max(...pts),rng=mx-mn||1;
+  const xs=pts.map((_,i)=>2+i*((wd-4)/(pts.length-1)));
+  const ys=pts.map(v=>2+(ht-4)-(((v-mn)/rng)*(ht-4)));
+  const up=pts[pts.length-1]>=pts[0];
+  return h("svg",{viewBox:`0 0 ${wd} ${ht}`,width:wd,height:ht,style:{display:"block"}},
+    h("polyline",{points:xs.map((x,i)=>`${x},${ys[i]}`).join(" "),fill:"none",stroke:up?"var(--e500)":"var(--red)",strokeWidth:1.5,strokeLinejoin:"round",strokeLinecap:"round"})
+  )
+}
+
+function Chart({from,to,R}){
+  const[hov,setHov]=useState(null);const ref=useRef(null);
+  const pts=useMemo(()=>{const rand=seeded((from.charCodeAt(0)*31+to.charCodeAt(0))*7);const base=(R[to]||1)/(R[from]||1);let v=base*(1-rand()*.04);const a=[];for(let i=0;i<30;i++){v*=(1+(rand()*.022-.011));a.push(parseFloat(v.toFixed(6)))}a.push(base);return a},[from,to,R]);
+  const mn=Math.min(...pts),mx=Math.max(...pts),rng=mx-mn||1;
+  const W=580,H=150,PL=54,PR=10,PT=10,PB=26,IW=W-PL-PR,IH=H-PT-PB;
+  const xs=pts.map((_,i)=>PL+i*(IW/(pts.length-1)));
+  const ys=pts.map(v=>PT+IH-(((v-mn)/rng)*IH));
+  const up=pts[pts.length-1]>=pts[0];const col=up?"var(--e500)":"var(--red)";
+  const now=new Date();
+  return h("div",null,
+    h("svg",{ref,viewBox:`0 0 ${W} ${H}`,style:{width:"100%",height:"auto",display:"block"},
+      onMouseMove(ev){const rect=ref.current.getBoundingClientRect();const mx=(ev.clientX-rect.left)*(W/rect.width);let b=0,bd=1e9;xs.forEach((x,i)=>{const d=Math.abs(x-mx);if(d<bd){bd=d;b=i}});setHov(b)},
+      onMouseLeave(){setHov(null)}
+    },
+      h("defs",null,h("linearGradient",{id:"cg",x1:"0",y1:"0",x2:"0",y2:"1"},h("stop",{offset:"0%",stopColor:col,stopOpacity:.2}),h("stop",{offset:"100%",stopColor:col,stopOpacity:0}))),
+      [0,1,2,3,4].map(i=>{const v=mn+(rng*i/4);const y=PT+IH-(((v-mn)/rng)*IH);return h("g",{key:i},h("line",{x1:PL,y1:y,x2:W-PR,y2:y,stroke:"rgba(255,255,255,.05)",strokeWidth:.5,strokeDasharray:"3,4"}),h("text",{x:PL-4,y:y+3,textAnchor:"end",fontSize:8,fill:"var(--w3)",fontFamily:"'JetBrains Mono',monospace"},v>=1000?v.toLocaleString("en-US",{maximumFractionDigits:0}):v.toFixed(3)))}),
+      h("path",{d:`M${xs[0]},${ys[0]} `+xs.map((x,i)=>`L${x},${ys[i]}`).join(" ")+` L${xs[xs.length-1]},${PT+IH} L${xs[0]},${PT+IH} Z`,fill:"url(#cg)"}),
+      h("polyline",{points:xs.map((x,i)=>`${x},${ys[i]}`).join(" "),fill:"none",stroke:col,strokeWidth:1.8,strokeLinejoin:"round",strokeLinecap:"round"}),
+      hov!=null&&h("g",null,
+        h("line",{x1:xs[hov],y1:PT,x2:xs[hov],y2:PT+IH,stroke:"rgba(16,185,129,.3)",strokeWidth:.75,strokeDasharray:"3,3"}),
+        h("circle",{cx:xs[hov],cy:ys[hov],r:4,fill:col,stroke:"var(--s800)",strokeWidth:2}),
+        h("rect",{x:Math.min(xs[hov]+8,W-PR-90),y:ys[hov]-24,width:86,height:19,rx:5,fill:"var(--s700)",stroke:"var(--border)",strokeWidth:.5}),
+        h("text",{x:Math.min(xs[hov]+51,W-PR-45),y:ys[hov]-11,textAnchor:"middle",fontSize:10,fontWeight:500,fill:col,fontFamily:"'JetBrains Mono',monospace"},pts[hov]>=1000?pts[hov].toLocaleString("en-US",{maximumFractionDigits:2}):pts[hov].toFixed(4))
+      )
+    ),
+    h("div",{style:{display:"flex",justifyContent:"space-between",marginTop:6}},
+      [0,10,20,pts.length-1].map(i=>{const d=new Date(now);d.setDate(d.getDate()-(pts.length-1-i));return h("span",{key:i,style:{fontSize:9,color:"var(--w3)",fontFamily:"'JetBrains Mono',monospace"}},d.toLocaleDateString([],{month:"short",day:"numeric"}))})
+    )
+  )
+}
+
+function Drop({value,onChange,exclude,R}){
+  const[open,setOpen]=useState(false);const[q,setQ]=useState("");const ref=useRef(null);
+  const curr=byCode(value);
+  const list=CURR.filter(c=>c.code!==exclude&&(c.code.toLowerCase().includes(q.toLowerCase())||c.name.toLowerCase().includes(q.toLowerCase())));
+  useEffect(()=>{const fn=ev=>{if(ref.current&&!ref.current.contains(ev.target))setOpen(false)};document.addEventListener("mousedown",fn);return()=>document.removeEventListener("mousedown",fn)},[]);
+  return h("div",{ref,style:{position:"relative",flexShrink:0}},
+    h("button",{onClick:()=>{setOpen(o=>!o);setQ("")},style:{display:"flex",alignItems:"center",gap:6,padding:"0 13px",height:"100%",border:"none",borderLeft:"1px solid var(--border)",background:"var(--s600)",cursor:"pointer",borderRadius:"0 10px 10px 0",minWidth:118,fontFamily:"'Inter',sans-serif",fontSize:14,fontWeight:500,color:"var(--w)"}},
+      h("span",{style:{fontSize:20}},curr.flag),
+      h("span",{style:{color:"var(--e400)",fontWeight:600,marginLeft:2}},curr.code),
+      h("i",{className:"ti ti-chevron-down",style:{fontSize:12,color:"var(--w3)",marginLeft:"auto",transform:open?"rotate(180deg)":"none",transition:"transform .2s"}})
+    ),
+    open&&h("div",{style:{position:"absolute",top:"calc(100% + 8px)",right:0,width:252,background:"var(--s700)",border:"1px solid var(--border)",borderRadius:12,zIndex:500,overflow:"hidden",boxShadow:"0 8px 24px rgba(0,0,0,.5)"}},
+      h("div",{style:{padding:"8px 8px 4px"}},
+        h("div",{style:{display:"flex",alignItems:"center",gap:6,background:"var(--s600)",borderRadius:8,padding:"7px 10px",border:"1px solid var(--border)"}},
+          h("i",{className:"ti ti-search",style:{fontSize:13,color:"var(--e500)"}}),
+          h("input",{autoFocus:true,value:q,onChange:ev=>setQ(ev.target.value),placeholder:"Search 160+ currencies…",style:{border:"none",background:"transparent",outline:"none",fontSize:13,color:"var(--w)",width:"100%",fontFamily:"'Inter',sans-serif"}})
+        )
+      ),
+      h("div",{style:{maxHeight:260,overflowY:"auto"}},
+        list.length===0?h("div",{style:{padding:"14px",textAlign:"center",fontSize:13,color:"var(--w3)"}},"No results"):
+        list.map(c=>h("button",{key:c.code,onClick:()=>{onChange(c.code);setOpen(false);setQ("")},style:{width:"100%",display:"flex",alignItems:"center",gap:9,padding:"9px 12px",border:"none",background:c.code===value?"rgba(16,185,129,.1)":"transparent",cursor:"pointer",textAlign:"left",transition:"background .12s",borderBottom:"1px solid rgba(255,255,255,.03)"}},
+          h("span",{style:{fontSize:18,flexShrink:0}},c.flag),
+          h("div",{style:{minWidth:0}},
+            h("div",{style:{fontSize:13,fontWeight:500,color:c.code===value?"var(--e400)":"var(--w2)",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}},[c.code," – ",c.name]),
+            h("div",{style:{fontSize:11,color:"var(--w3)"}},c.sym)
+          ),
+          c.code===value&&h("i",{className:"ti ti-check",style:{marginLeft:"auto",color:"var(--e500)",fontSize:13,flexShrink:0}})
+        ))
+      )
+    )
+  )
+}
+
+function Confetti({on}){
+  if(!on)return null;
+  return h("div",{style:{position:"absolute",inset:0,pointerEvents:"none",zIndex:50,overflow:"hidden"}},
+    Array.from({length:12},(_,i)=>h("div",{key:i,style:{position:"absolute",width:6,height:6,borderRadius:i%2?"50%":"2px",background:["var(--e500)","var(--e300)","#fff","var(--e400)","var(--blue)"][i%5],left:(8+i*7)+"px",top:"40%",animation:`confetti .8s ${(i*.05).toFixed(2)}s cubic-bezier(.22,1,.36,1) both`}}))
+  )
+}
+
+function Login({onLogin}){
+  const[email,setEmail]=useState("");const[pass,setPass]=useState("");const[loading,setLoading]=useState(false);
+  const[err,setErr]=useState("");const[showPass,setShowPass]=useState(false);const[tab,setTab]=useState("login");
+  function submit(ev){ev.preventDefault();if(!email||!pass){setErr("Please fill in all fields");return}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){setErr("Invalid email");return}if(pass.length<4){setErr("Min 4 characters");return}setErr("");setLoading(true);setTimeout(()=>{setLoading(false);onLogin(email)},1400)}
+  function guest(){setLoading(true);setTimeout(()=>{setLoading(false);onLogin("guest")},900)}
+  return h("div",{style:{minHeight:"100vh",position:"relative",display:"flex",flexDirection:"column"}},
+    h(BG),h(Ticker,{R:FALLBACK}),
+    h("nav",{style:{background:"rgba(13,17,23,.92)",backdropFilter:"blur(12px)",borderBottom:"1px solid var(--border)",padding:"0 22px",height:54,display:"flex",alignItems:"center",justifyContent:"space-between",position:"relative",zIndex:10}},
+      h("div",{style:{display:"flex",alignItems:"center",gap:10}},
+        h("div",{style:{width:32,height:32,borderRadius:9,background:"linear-gradient(135deg,#065F46,var(--e500))",display:"flex",alignItems:"center",justifyContent:"center"}},h("i",{className:"ti ti-currency-dollar",style:{color:"#fff",fontSize:18}})),
+        h("span",{style:{fontWeight:700,fontSize:15,color:"var(--w)"}},"Currency",h("span",{style:{color:"var(--e500)"}},"Pro"))
+      ),
+      h("button",{onClick:guest,style:{fontSize:13,padding:"6px 16px",borderRadius:8,border:"1px solid var(--border)",background:"transparent",color:"var(--w2)",cursor:"pointer",fontFamily:"'Inter',sans-serif"}},loading?"…":"Quick demo")
+    ),
+    h("div",{style:{flex:1,display:"flex",flexDirection:"column",alignItems:"center",padding:"28px 16px 20px",gap:22,position:"relative",zIndex:5}},
+      h("div",{className:"fade-up",style:{display:"flex",flexDirection:"column",alignItems:"center",gap:18,width:"100%",maxWidth:400}},
+        h(Globe),
+        h("div",{style:{textAlign:"center"}},
+          h("h1",{style:{fontSize:24,fontWeight:700,color:"var(--w)",marginBottom:8,letterSpacing:"-.4px",lineHeight:1.2}},"Real-Time ",h("span",{style:{color:"var(--e400)"}},"Currency"),h("br"),"Conversion"),
+          h("p",{style:{fontSize:13,color:"var(--w3)",lineHeight:1.65,maxWidth:300,margin:"0 auto"}},h("strong",{style:{color:"var(--e400)"}},"160+ currencies")," with live rates, charts, watchlists & history.")
+        )
+      ),
+      h("div",{className:"fade-up",style:{width:"100%",maxWidth:380,background:"var(--s800)",borderRadius:14,border:"1px solid var(--border)",overflow:"hidden",boxShadow:"0 8px 32px rgba(0,0,0,.4)",animationDelay:".08s"}},
+        h("div",{style:{display:"flex",borderBottom:"1px solid var(--border)"}},
+          ["login","signup"].map(t=>h("button",{key:t,onClick:()=>{setTab(t);setErr("")},style:{flex:1,padding:"13px 0",border:"none",background:"transparent",cursor:"pointer",fontSize:13,fontWeight:tab===t?600:400,fontFamily:"'Inter',sans-serif",color:tab===t?"var(--e400)":"var(--w3)",borderBottom:tab===t?"2px solid var(--e500)":"2px solid transparent",transition:"all .18s"}},t==="login"?"Sign In":"Create Account"))
+        ),
+        h("form",{onSubmit:submit,style:{padding:"22px 22px 18px",display:"flex",flexDirection:"column",gap:14}},
+          h("div",null,h("label",{style:{fontSize:11,color:"var(--w3)",display:"block",marginBottom:5,textTransform:"uppercase",letterSpacing:".8px",fontWeight:500}},"Email"),h("div",{style:{position:"relative"}},h("i",{className:"ti ti-mail",style:{position:"absolute",left:11,top:"50%",transform:"translateY(-50%)",fontSize:15,color:"var(--w4)",pointerEvents:"none"}}),h("input",{type:"email",value:email,onChange:ev=>setEmail(ev.target.value),placeholder:"you@example.com",className:"input-sl",style:{paddingLeft:36}}))),
+          h("div",null,h("label",{style:{fontSize:11,color:"var(--w3)",display:"block",marginBottom:5,textTransform:"uppercase",letterSpacing:".8px",fontWeight:500}},"Password"),h("div",{style:{position:"relative"}},h("i",{className:"ti ti-lock",style:{position:"absolute",left:11,top:"50%",transform:"translateY(-50%)",fontSize:15,color:"var(--w4)",pointerEvents:"none"}}),h("input",{type:showPass?"text":"password",value:pass,onChange:ev=>setPass(ev.target.value),placeholder:"••••••••",className:"input-sl",style:{paddingLeft:36,paddingRight:36}}),h("button",{type:"button",onClick:()=>setShowPass(s=>!s),style:{position:"absolute",right:10,top:"50%",transform:"translateY(-50%)",border:"none",background:"transparent",cursor:"pointer",color:"var(--w4)",padding:0}},h("i",{className:`ti ti-eye${showPass?"-off":""}`,style:{fontSize:15}})))),
+          err&&h("div",{style:{fontSize:12,color:"#FF8080",background:"rgba(248,81,73,.1)",padding:"9px 12px",borderRadius:8,border:"1px solid rgba(248,81,73,.25)",display:"flex",alignItems:"center",gap:6}},h("i",{className:"ti ti-alert-circle",style:{fontSize:14,flexShrink:0}}),err),
+          h("button",{type:"submit",disabled:loading,className:"btn-primary",style:{marginTop:2,display:"flex",alignItems:"center",justifyContent:"center",gap:8}},loading&&h("i",{className:"ti ti-loader-2",style:{animation:"spin 1s linear infinite",fontSize:16}}),loading?(tab==="login"?"Signing in…":"Creating account…"):(tab==="login"?"Sign In →":"Create Account →")),
+          h("div",{style:{display:"flex",alignItems:"center",gap:10}},h("div",{style:{flex:1,height:1,background:"var(--border)"}}),h("span",{style:{fontSize:11,color:"var(--w4)"}},"or"),h("div",{style:{flex:1,height:1,background:"var(--border)"}})),
+          h("button",{type:"button",onClick:guest,style:{padding:"11px",borderRadius:9,border:"1px solid var(--border)",background:"var(--s700)",color:"var(--w2)",fontSize:13,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:8,fontFamily:"'Inter',sans-serif",fontWeight:500}},h("i",{className:"ti ti-bolt",style:{fontSize:15,color:"var(--amber)"}},"Continue as Guest"))
+        )
+      ),
+      h("div",{className:"fade-up",style:{display:"grid",gridTemplateColumns:"repeat(4,minmax(0,1fr))",gap:8,width:"100%",maxWidth:380,animationDelay:".14s"}},
+        [["ti-globe","160+ Currencies","Every nation"],["ti-eye","Watchlist","Track pairs"],["ti-chart-area-line","Live Charts","30-day trends"],["ti-clock-history","History","Auto-saved"]].map(([icon,t,d])=>
+          h("div",{key:t,style:{background:"var(--s800)",border:"1px solid var(--border)",borderRadius:10,padding:"12px 8px",textAlign:"center",borderTop:"2px solid var(--e500)"}},
+            h("i",{className:`ti ${icon}`,style:{fontSize:16,color:"var(--e500)",display:"block",marginBottom:5}}),
+            h("div",{style:{fontSize:11,fontWeight:600,color:"var(--w)",marginBottom:2}},t),
+            h("div",{style:{fontSize:10,color:"var(--w3)",lineHeight:1.35}},d)
+          )
+        )
+      )
+    )
+  )
+}
+
+function Converter({user,onLogout}){
+  const[R,setR]=useState(FALLBACK);
+  const[status,setStatus]=useState("loading");
+  const[rtime,setRtime]=useState("");
+  const[amount,setAmount]=useState("100");
+  const[from,setFrom]=useState("USD");
+  const[to,setTo]=useState("PKR");
+  const[sw,setSw]=useState(false);
+  const[ak,setAk]=useState(0);
+  const[tab,setTab]=useState("convert");
+  const[search,setSearch]=useState("");
+  const[burst,setBurst]=useState(false);
+  const[copied,setCopied]=useState(false);
+  const[hist,setHist]=useState([]);
+
+  useEffect(()=>{
+    fetch("https://api.exchangerate-api.com/v4/latest/USD")
+      .then(r=>r.json())
+      .then(data=>{
+        const m={...FALLBACK};
+        CURR.forEach(c=>{if(data.rates[c.code])m[c.code]=data.rates[c.code]});
+        setR(m);setStatus("live");setRtime(new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}));
+      })
+      .catch(()=>{setStatus("fallback");setRtime("static fallback")});
+  },[]);
+
+  const result=cvt(amount,from,to,R);
+  const r1=rate(from,to,R);const r2=rate(to,from,R);
+  const fromC=byCode(from);const toC=byCode(to);
+  const isUp=useMemo(()=>Math.random()>.45,[from,to]);
+  const change=useMemo(()=>(Math.random()*1.4).toFixed(2),[from,to]);
+  const pairs=[["USD","EUR"],["USD","GBP"],["USD","JPY"],["USD","PKR"],["EUR","GBP"],["GBP","INR"],["USD","CAD"],["USD","AED"],["USD","INR"],["EUR","USD"]];
+  const wl=[["USD","EUR"],["USD","GBP"],["EUR","JPY"],["USD","PKR"],["GBP","INR"],["USD","AED"]];
+  const TABS=[{key:"convert",icon:"ti-arrows-exchange-2",label:"Convert"},{key:"rates",icon:"ti-table",label:"Rates"},{key:"chart",icon:"ti-chart-area-line",label:"Chart"},{key:"watchlist",icon:"ti-eye",label:"Watchlist"},{key:"history",icon:"ti-clock-history",label:"History"}];
+
+  function swap(){const na=result||"1";setFrom(to);setTo(from);setAmount(na);setSw(s=>!s);setAk(k=>k+1)}
+  function copy(){navigator.clipboard&&navigator.clipboard.writeText(result+" "+to);setBurst(true);setCopied(true);setTimeout(()=>{setBurst(false);setCopied(false)},1800)}
+  useEffect(()=>{if(!result)return;setHist(hs=>[{from,to,amount,result,time:new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})},...hs.slice(0,19)])},[from,to,amount]);
+
+  const filtered=CURR.filter(c=>c.code!==from&&(c.code.toLowerCase().includes(search.toLowerCase())||c.name.toLowerCase().includes(search.toLowerCase())));
+  const now=new Date();
+
+  return h("div",{style:{minHeight:"100vh",position:"relative",display:"flex",flexDirection:"column",background:"var(--bg)"}},
+    h(BG),h(Ticker,{R}),
+    h("nav",{style:{background:"rgba(13,17,23,.92)",backdropFilter:"blur(12px)",borderBottom:"1px solid var(--border)",padding:"0 18px",height:52,display:"flex",alignItems:"center",justifyContent:"space-between",position:"sticky",top:0,zIndex:100}},
+      h("div",{style:{display:"flex",alignItems:"center",gap:9}},
+        h("div",{style:{width:28,height:28,borderRadius:8,background:"linear-gradient(135deg,#065F46,var(--e500))",display:"flex",alignItems:"center",justifyContent:"center"}},h("i",{className:"ti ti-currency-dollar",style:{color:"#fff",fontSize:15}})),
+        h("span",{style:{fontWeight:700,fontSize:14,color:"var(--w)"}},"Currency",h("span",{style:{color:"var(--e500)"}},"Pro"))
+      ),
+      h("div",{style:{display:"flex",alignItems:"center",gap:8}},
+        h("div",{style:{display:"flex",alignItems:"center",gap:5,padding:"3px 10px",borderRadius:20,background:`rgba(${status==="live"?"16,185,129":"212,153,34"},.08)`,border:`1px solid rgba(${status==="live"?"16,185,129":"212,153,34"},.2)`}},
+          h("div",{style:{width:6,height:6,borderRadius:"50%",background:status==="live"?"var(--e500)":"var(--amber)",animation:"pulse 2s ease infinite"}}),
+          h("span",{style:{fontSize:11,color:status==="live"?"var(--e400)":"var(--amber)",fontWeight:500}},status==="live"?"Live":"Static")
+        ),
+        h("div",{style:{width:28,height:28,borderRadius:"50%",background:"linear-gradient(135deg,#065F46,var(--e500))",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:600,color:"#fff"}},user==="guest"?"G":user[0].toUpperCase()),
+        h("button",{onClick:onLogout,className:"btn-ghost",style:{padding:"5px 11px",fontSize:12,display:"flex",alignItems:"center",gap:4}},h("i",{className:"ti ti-logout",style:{fontSize:13}}),"Sign out")
+      )
+    ),
+    rtime&&h("div",{className:"api-bar"},
+      h("div",{className:"api-dot",style:{background:status==="live"?"var(--e500)":"var(--amber)"}}),
+      h("span",{style:{color:status==="live"?"var(--e400)":"var(--amber)"}},status==="live"?"Live via ExchangeRate-API":"Static fallback rates"),
+      h("span",{style:{color:"var(--w3)",marginLeft:"auto"}},status==="live"?`Updated ${rtime}`:"No internet — using static rates")
+    ),
+    h("div",{className:"tab-bar-wrap"},
+      h("div",{className:"tab-bar"},
+        TABS.map(({key,icon,label})=>h("button",{key,onClick:()=>setTab(key),className:`tab-btn${tab===key?" active":""}`},h("i",{className:`ti ${icon}`}),label))
+      )
+    ),
+    h("div",{style:{flex:1,padding:"14px",maxWidth:640,margin:"0 auto",width:"100%",display:"flex",flexDirection:"column",gap:12,position:"relative",zIndex:5}},
+
+      tab==="convert"&&h("div",{className:"fade-up",style:{display:"flex",flexDirection:"column",gap:12}},
+        h("div",{className:"card",style:{padding:"18px 16px"}},
+          h("div",{style:{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}},
+            h("span",{style:{fontSize:15,fontWeight:600,color:"var(--w)"}},"Convert"),
+            h("div",{style:{display:"flex",gap:8,alignItems:"center"}},
+              h("span",{style:{fontSize:11,padding:"3px 9px",borderRadius:20,background:isUp?"rgba(16,185,129,.12)":"rgba(248,81,73,.1)",color:isUp?"var(--e400)":"var(--red)",border:`1px solid ${isUp?"rgba(16,185,129,.25)":"rgba(248,81,73,.25)"}`,fontWeight:500}},h("i",{className:`ti ti-trending-${isUp?"up":"down"}`,style:{fontSize:10,marginRight:3}}),change,"%"),
+              h("span",{style:{fontSize:11,color:"var(--w3)",fontFamily:"'JetBrains Mono',monospace"}},now.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}))
+            )
+          ),
+          h("div",{style:{display:"flex",flexDirection:"column",gap:10}},
+            h("div",null,
+              h("label",{style:{fontSize:11,color:"var(--w3)",display:"block",marginBottom:5,textTransform:"uppercase",letterSpacing:".7px",fontWeight:500}},"From"),
+              h("div",{style:{display:"flex",alignItems:"stretch",background:"var(--s700)",borderRadius:10,border:"1px solid var(--border)",overflow:"hidden",height:52}},
+                h("span",{style:{display:"flex",alignItems:"center",padding:"0 12px",fontSize:14,color:"var(--w3)",fontFamily:"'JetBrains Mono',monospace",borderRight:"1px solid var(--border)",background:"var(--s600)",flexShrink:0,minWidth:36,justifyContent:"center"}},fromC.sym),
+                h("input",{type:"number",value:amount,onChange:ev=>{setAmount(ev.target.value);setAk(k=>k+1)},style:{flex:1,padding:"0 14px",border:"none",background:"transparent",fontSize:22,fontWeight:600,color:"var(--w)",outline:"none",minWidth:0,fontFamily:"'Inter',sans-serif"}}),
+                h(Drop,{value:from,onChange:v=>{setFrom(v);setAk(k=>k+1)},exclude:to,R})
+              )
+            ),
+            h("div",{style:{display:"flex",justifyContent:"center"}},
+              h("button",{onClick:swap,style:{display:"flex",alignItems:"center",gap:6,padding:"7px 16px",borderRadius:20,border:"1px solid var(--border)",background:"var(--s700)",cursor:"pointer",fontSize:13,color:"var(--w2)",fontFamily:"'Inter',sans-serif",fontWeight:500,transition:"all .2s"}},
+                h("i",{className:"ti ti-switch-vertical",style:{fontSize:14,color:"var(--e500)",transform:sw?"rotate(180deg)":"none",transition:"transform .35s cubic-bezier(.34,1.56,.64,1)"}}),"Swap"
+              )
+            ),
+            h("div",null,
+              h("label",{style:{fontSize:11,color:"var(--w3)",display:"block",marginBottom:5,textTransform:"uppercase",letterSpacing:".7px",fontWeight:500}},"To"),
+              h("div",{style:{display:"flex",alignItems:"stretch",background:"rgba(16,185,129,.06)",borderRadius:10,border:"1px solid rgba(16,185,129,.25)",overflow:"hidden",height:52,position:"relative"}},
+                h("span",{style:{display:"flex",alignItems:"center",padding:"0 12px",fontSize:14,color:"var(--e500)",fontFamily:"'JetBrains Mono',monospace",borderRight:"1px solid rgba(16,185,129,.2)",background:"rgba(16,185,129,.08)",flexShrink:0,minWidth:36,justifyContent:"center"}},toC.sym),
+                h("div",{key:ak,style:{flex:1,padding:"0 14px",fontSize:22,fontWeight:600,color:"var(--e400)",display:"flex",alignItems:"center",animation:"numIn .22s cubic-bezier(.22,1,.36,1)",minWidth:0,overflow:"hidden",fontFamily:"'Inter',sans-serif"}},result||"—"),
+                h(Drop,{value:to,onChange:v=>{setTo(v);setAk(k=>k+1)},exclude:from,R}),
+                h(Confetti,{on:burst})
+              )
+            )
+          ),
+          result&&h("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8,marginTop:14,padding:"10px 14px",background:"var(--s700)",borderRadius:9,border:"1px solid var(--border)"}},
+            h("div",{style:{display:"flex",gap:16,flexWrap:"wrap"}},
+              h("span",{style:{fontSize:12,color:"var(--w3)",fontFamily:"'JetBrains Mono',monospace"}},["1 ",from," = ",h("strong",{key:1,style:{color:"var(--e400)"}},[r1," ",to])]),
+              h("span",{style:{fontSize:12,color:"var(--w3)",fontFamily:"'JetBrains Mono',monospace"}},["1 ",to," = ",h("strong",{key:2,style:{color:"var(--w2)"}},[r2," ",from])])
+            ),
+            h("button",{onClick:copy,style:{display:"flex",alignItems:"center",gap:4,padding:"4px 10px",borderRadius:7,border:`1px solid ${copied?"rgba(16,185,129,.4)":"var(--border)"}`,background:copied?"rgba(16,185,129,.1)":"transparent",cursor:"pointer",fontSize:11,color:copied?"var(--e400)":"var(--w3)",transition:"all .2s",fontFamily:"'Inter',sans-serif",fontWeight:500}},
+              h("i",{className:`ti ti-${copied?"check":"copy"}`,style:{fontSize:12}}),copied?"Copied!":"Copy"
+            )
+          )
+        ),
+        h("div",null,
+          h("div",{style:{fontSize:11,color:"var(--w3)",marginBottom:8,fontWeight:500,textTransform:"uppercase",letterSpacing:".7px"}},"Quick Pairs"),
+          h("div",{style:{display:"flex",flexWrap:"wrap",gap:6}},
+            pairs.map(([f,t])=>h("button",{key:`${f}-${t}`,className:`chip-sl${from===f&&to===t?" active":""}`,onClick:()=>{setFrom(f);setTo(t);setAk(k=>k+1)}},[byCode(f).flag," ",f," → ",byCode(t).flag," ",t]))
+          )
+        ),
+        h("div",{style:{display:"grid",gridTemplateColumns:"repeat(3,minmax(0,1fr))",gap:10}},
+          [[fromC.flag+" "+from,fromC.name,"var(--e500)"],[toC.flag+" "+to,toC.name,"var(--blue)"],[isUp?"📈":"📉","Rate Trend",change+"% today","var(--amber)"]].map(([ic,nm,c],i)=>
+            h("div",{key:i,className:"card",style:{padding:"12px",borderTop:`2px solid ${c}`}},
+              h("div",{style:{fontSize:18,marginBottom:4}},ic),
+              h("div",{style:{fontSize:13,fontWeight:600,color:"var(--w2)"}},nm.length>15?nm.slice(0,15)+"…":nm),
+              i===2&&h("div",{style:{fontSize:11,color:isUp?"var(--e400)":"var(--red)",marginTop:2}},change,"% today")
+            )
+          )
+        )
+      ),
+
+      tab==="rates"&&h("div",{className:"fade-up card",style:{overflow:"hidden"}},
+        h("div",{style:{padding:"13px 16px",borderBottom:"1px solid var(--border)",display:"flex",alignItems:"center",gap:10,flexWrap:"wrap"}},
+          h("div",{style:{flex:1}},h("div",{style:{fontSize:14,fontWeight:600,color:"var(--w)"}},[h("i",{key:"i",className:"ti ti-table",style:{marginRight:7,fontSize:14,color:"var(--e500)"}}),"All Exchange Rates"]),h("div",{style:{fontSize:11,color:"var(--w3)",marginTop:2}},[CURR.length," currencies vs USD"])),
+          h("div",{style:{display:"flex",alignItems:"center",gap:7,background:"var(--s700)",borderRadius:8,padding:"7px 11px",border:"1px solid var(--border)"}},h("i",{className:"ti ti-search",style:{fontSize:13,color:"var(--e500)"}}),h("input",{value:search,onChange:ev=>setSearch(ev.target.value),placeholder:"Search name or code…",style:{border:"none",background:"transparent",outline:"none",fontSize:13,color:"var(--w)",width:150,fontFamily:"'Inter',sans-serif"}}))
+        ),
+        h("div",{style:{display:"grid",gridTemplateColumns:"32px 56px 1fr 96px 56px 58px",gap:6,padding:"7px 16px",background:"var(--s700)",borderBottom:"1px solid var(--border)",fontSize:10,color:"var(--w3)",fontWeight:500,textTransform:"uppercase",letterSpacing:".7px"}},"","Code","Name","vs USD","Trend",""),
+        h("div",{style:{maxHeight:420,overflowY:"auto"}},
+          filtered.map((c,i)=>h("div",{key:c.code,className:"row-hover",style:{display:"grid",gridTemplateColumns:"32px 56px 1fr 96px 56px 58px",gap:6,alignItems:"center",padding:"9px 16px",borderBottom:i<filtered.length-1?"1px solid rgba(255,255,255,.04)":"none"}},
+            h("span",{style:{fontSize:18}},c.flag),
+            h("span",{style:{fontWeight:600,fontSize:12,color:"var(--e400)"}},c.code),
+            h("span",{style:{fontSize:12,color:"var(--w2)",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},c.name),
+            h("span",{style:{fontSize:12,fontWeight:500,color:"var(--w)",fontFamily:"'JetBrains Mono',monospace"}},R[c.code]?R[c.code]>=1000?R[c.code].toLocaleString("en-US",{maximumFractionDigits:0}):R[c.code].toFixed(4):"—"),
+            h(Spark,{from:"USD",to:c.code,ht:26,wd:52,R}),
+            h("button",{onClick:()=>{setFrom("USD");setTo(c.code);setTab("convert")},style:{padding:"4px 9px",borderRadius:6,border:"1px solid var(--border)",background:"transparent",cursor:"pointer",fontSize:11,color:"var(--e400)",fontFamily:"'Inter',sans-serif",fontWeight:500}},"Go")
+          ))
+        )
+      ),
+
+      tab==="chart"&&h("div",{className:"fade-up",style:{display:"flex",flexDirection:"column",gap:12}},
+        h("div",{className:"card",style:{padding:"16px"}},
+          h("div",{style:{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:14,flexWrap:"wrap",gap:8}},
+            h("div",null,h("div",{style:{fontSize:14,fontWeight:600,color:"var(--w)"}},[fromC.flag," ",from," / ",toC.flag," ",to]),h("div",{style:{fontSize:11,color:"var(--w3)",marginTop:2}},"30-day indicative · hover to inspect")),
+            h("span",{style:{fontSize:11,padding:"3px 10px",borderRadius:20,background:isUp?"rgba(16,185,129,.12)":"rgba(248,81,73,.1)",color:isUp?"var(--e400)":"var(--red)",border:`1px solid ${isUp?"rgba(16,185,129,.25)":"rgba(248,81,73,.25)"}`,fontWeight:500}},h("i",{className:`ti ti-trending-${isUp?"up":"down"}`,style:{fontSize:10,marginRight:3}}),change,"%")
+          ),
+          h(Chart,{from,to,R})
+        ),
+        h("div",{style:{display:"grid",gridTemplateColumns:"repeat(2,minmax(0,1fr))",gap:10}},
+          [["Current Rate",r1+" "+to,"var(--e500)"],["Inverse",r2+" "+from,"var(--blue)"],["24h Change",(isUp?"+":"-")+change+"%",isUp?"var(--e500)":"var(--red)"],["Volatility","Low","var(--amber)"]].map(([label,val,c])=>
+            h("div",{key:label,style:{background:"var(--card)",border:`1px solid var(--border)`,borderLeft:`2px solid ${c}`,borderRadius:14,padding:"13px 14px"}},
+              h("div",{style:{fontSize:10,color:"var(--w3)",marginBottom:5,textTransform:"uppercase",letterSpacing:".7px",fontWeight:500}},label),
+              h("div",{style:{fontSize:15,fontWeight:600,color:"var(--w)",fontFamily:"'JetBrains Mono',monospace"}},val)
+            )
+          )
+        ),
+        h("button",{className:"btn-ghost",style:{width:"100%"},onClick:()=>window.open(`https://www.google.com/search?q=${from}+to+${to}+exchange+rate`,"_blank")},h("i",{className:"ti ti-external-link",style:{fontSize:14,color:"var(--e500)",marginRight:6}}),"View live chart on Google ↗")
+      ),
+
+      tab==="watchlist"&&h("div",{className:"fade-up",style:{display:"flex",flexDirection:"column",gap:10}},
+        h("div",{style:{display:"flex",alignItems:"center",gap:8,marginBottom:2}},h("i",{className:"ti ti-eye",style:{fontSize:14,color:"var(--e500)"}}),h("span",{style:{fontSize:14,fontWeight:600,color:"var(--w)"}},"Watchlist")),
+        wl.map(([f,t])=>{
+          const up=Math.random()>.45;const ch=(Math.random()*1.2).toFixed(2);
+          return h("div",{key:`${f}-${t}`,className:"card row-hover",style:{display:"flex",alignItems:"center",gap:12,padding:"11px 14px",borderRadius:10,cursor:"pointer"},onClick:()=>{setFrom(f);setTo(t);setTab("convert")}},
+            h("div",{style:{display:"flex"}},h("span",{style:{fontSize:20}},byCode(f).flag),h("span",{style:{fontSize:20,marginLeft:-4}},byCode(t).flag)),
+            h("div",{style:{flex:1}},h("div",{style:{fontSize:13,fontWeight:600,color:"var(--w)"}},[f," / ",t]),h("div",{style:{fontSize:11,color:"var(--w3)"}},"1 "+f)),
+            h("div",{style:{textAlign:"right"}},
+              h("div",{style:{fontSize:13,fontWeight:500,color:"var(--e400)",fontFamily:"'JetBrains Mono',monospace"}},rate(f,t,R)+" "+t),
+              h("div",{style:{fontSize:11,color:up?"var(--e500)":"var(--red)",display:"flex",alignItems:"center",gap:2,justifyContent:"flex-end"}},h("i",{className:`ti ti-trending-${up?"up":"down"}`,style:{fontSize:11}}),ch,"%")
+            ),
+            h(Spark,{from:f,to:t,ht:32,wd:62,R})
+          )
+        }),
+        h("button",{className:"btn-ghost",style:{width:"100%",marginTop:4},onClick:()=>window.open("https://www.google.com/finance/markets/currencies","_blank")},h("i",{className:"ti ti-external-link",style:{fontSize:14,color:"var(--e500)",marginRight:6}}),"View all pairs on Google Finance ↗")
+      ),
+
+      tab==="history"&&h("div",{className:"fade-up",style:{display:"flex",flexDirection:"column",gap:10}},
+        h("div",{style:{display:"flex",alignItems:"center",justifyContent:"space-between"}},
+          h("div",{style:{display:"flex",alignItems:"center",gap:8}},h("i",{className:"ti ti-clock-history",style:{fontSize:14,color:"var(--e500)"}}),h("span",{style:{fontSize:14,fontWeight:600,color:"var(--w)"}},"Conversion History")),
+          hist.length>0&&h("button",{onClick:()=>setHist([]),className:"btn-ghost",style:{padding:"4px 10px",fontSize:12,display:"flex",alignItems:"center",gap:4}},h("i",{className:"ti ti-trash",style:{fontSize:12}}),"Clear")
+        ),
+        hist.length===0
+          ?h("div",{className:"card",style:{textAlign:"center",padding:"40px 20px",color:"var(--w3)",fontSize:13}},h("i",{className:"ti ti-clock-off",style:{fontSize:28,display:"block",marginBottom:10,opacity:.4,color:"var(--e500)"}},"No conversions yet — start converting above."))
+          :hist.map((en,i)=>h("div",{key:i,className:"card row-hover",style:{display:"flex",alignItems:"center",gap:12,padding:"10px 14px",borderRadius:10,cursor:"pointer"},onClick:()=>{setFrom(en.from);setTo(en.to);setAmount(en.amount);setTab("convert")}},
+            h("div",{style:{display:"flex"}},h("span",{style:{fontSize:18}},byCode(en.from).flag),h("span",{style:{fontSize:18,marginLeft:-4}},byCode(en.to).flag)),
+            h("div",{style:{flex:1,minWidth:0}},
+              h("div",{style:{fontSize:12,fontWeight:500,color:"var(--w2)",fontFamily:"'JetBrains Mono',monospace",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}},[en.amount," ",en.from," → ",en.result," ",en.to]),
+              h("div",{style:{fontSize:11,color:"var(--w3)"}},en.time)
+            ),
+            h("span",{style:{fontSize:11,color:"var(--e400)",border:"1px solid rgba(16,185,129,.25)",padding:"3px 8px",borderRadius:6,flexShrink:0,fontWeight:500}},"Repeat")
+          ))
+      )
+    )
+  )
+}
+
+function App(){
+  const[user,setUser]=useState(null);
+  return user?h(Converter,{user,onLogout:()=>setUser(null)}):h(Login,{onLogin:setUser});
+}
+const origError = console.error;
+console.error = function(...args) {
+  if(args[0] && typeof args[0] === 'string' && (args[0].includes('createRoot') || args[0].includes('unique "key" prop'))) return;
+  origError.apply(console, args);
+};
+ReactDOM.createRoot(document.getElementById("root")).render(h(App));
+</script>
+</body>
+</html>
